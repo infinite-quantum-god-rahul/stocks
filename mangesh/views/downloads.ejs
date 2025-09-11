@@ -1,0 +1,112 @@
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="text-center mb-5">
+                <h1 class="display-4 fw-bold text-primary mb-3"><%= title %></h1>
+                <p class="lead text-muted">Download comprehensive analysis documents and datasets</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Download Files -->
+    <div class="row mb-5">
+        <div class="col-lg-12">
+            <div class="row">
+                <% files.forEach(function(file, index) { %>
+                <div class="col-lg-6 col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm border-0 download-card">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="file-icon me-3">
+                                    <% if (file.type === 'PDF') { %>
+                                        <i class="fas fa-file-pdf text-danger fs-1"></i>
+                                    <% } else if (file.type === 'Excel') { %>
+                                        <i class="fas fa-file-excel text-success fs-1"></i>
+                                    <% } else { %>
+                                        <i class="fas fa-file-alt text-primary fs-1"></i>
+                                    <% } %>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h5 class="fw-bold mb-2"><%= file.name %></h5>
+                                    <p class="text-muted mb-2">
+                                        <i class="fas fa-file me-1"></i>
+                                        <%= file.type %> • <%= file.size %>
+                                    </p>
+                                    <button class="btn btn-primary btn-sm">
+                                        <i class="fas fa-download me-1"></i>
+                                        Download
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Resources -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-info text-white">
+                    <h2 class="h4 fw-bold mb-0">📚 Additional Resources</h2>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Market Data</h6>
+                                    <p class="text-muted mb-0">Raw market research data</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <i class="fas fa-calculator"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Financial Models</h6>
+                                    <p class="text-muted mb-0">Interactive Excel spreadsheets</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-warning text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <i class="fas fa-presentation"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Presentations</h6>
+                                    <p class="text-muted mb-0">Executive and investor decks</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.download-card {
+    transition: transform 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.download-card:hover {
+    transform: translateY(-3px);
+    border-color: #0d6efd;
+}
+
+.file-icon {
+    min-width: 60px;
+}
+</style>

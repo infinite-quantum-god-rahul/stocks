@@ -1,0 +1,374 @@
+<%- include('layout', { body: `
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 fw-bold mb-4">Comprehensive Market Analysis</h1>
+                    <p class="lead mb-4">
+                        Data-driven insights from 5-10 years of historical data, 2024 market snapshot, and 3-5 year forecasts covering recruitment tech, AI matching, HR analytics, and gig-economy segments.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Overview -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2 class="section-title">Market Overview</h2>
+                    <p class="section-subtitle">
+                        The recruitment technology market is experiencing unprecedented growth with perfect timing for AI-powered solutions.
+                    </p>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <div class="metric-card text-center">
+                                <div class="metric-value text-primary">$13.2B</div>
+                                <div class="metric-label">Current Market (2024)</div>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <div class="metric-card text-center">
+                                <div class="metric-value text-success">$37.8B</div>
+                                <div class="metric-label">Projected (2032)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <div class="metric-card text-center">
+                                <div class="metric-value text-warning">13.9%</div>
+                                <div class="metric-label">CAGR</div>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <div class="metric-card text-center">
+                                <div class="metric-value text-info">$5.29B</div>
+                                <div class="metric-label">North America</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="chart-container">
+                        <canvas id="marketGrowthChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Historical Data -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center">Historical Market Evolution (2015-2024)</h2>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Recruitment Technology</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><strong>2019:</strong> $8.2B market size</li>
+                            <li class="mb-2"><strong>2022:</strong> $11.5B (12.1% CAGR)</li>
+                            <li class="mb-2"><strong>2024:</strong> $13.2B current</li>
+                            <li class="mb-2"><strong>Growth:</strong> 60% increase since 2019</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">AI Adoption</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><strong>2018:</strong> 12% of companies</li>
+                            <li class="mb-2"><strong>2021:</strong> 35% adoption rate</li>
+                            <li class="mb-2"><strong>2024:</strong> 52% current usage</li>
+                            <li class="mb-2"><strong>Growth:</strong> 333% increase</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Remote Work</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><strong>2019:</strong> 15% remote workers</li>
+                            <li class="mb-2"><strong>2020:</strong> 42% (COVID impact)</li>
+                            <li class="mb-2"><strong>2024:</strong> 45% current</li>
+                            <li class="mb-2"><strong>Growth:</strong> 200% increase</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2024 Market Snapshot -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center">2024 Market Snapshot</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="chart-container">
+                        <canvas id="aiAdoptionChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="fw-bold mb-4">Key Market Drivers</h3>
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <div class="metric-card">
+                                <div class="d-flex align-items-center">
+                                    <div class="feature-icon me-3">
+                                        <i class="fas fa-robot"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">AI Integration</h6>
+                                        <p class="mb-0 text-muted">78% of staffing firms using AI by 2025</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <div class="metric-card">
+                                <div class="d-flex align-items-center">
+                                    <div class="feature-icon me-3">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Remote Hiring</h6>
+                                        <p class="mb-0 text-muted">60% of recruitment interactions are virtual</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <div class="metric-card">
+                                <div class="d-flex align-items-center">
+                                    <div class="feature-icon me-3">
+                                        <i class="fas fa-balance-scale"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">DEI Focus</h6>
+                                        <p class="mb-0 text-muted">76% prioritize diversity in hiring</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <div class="metric-card">
+                                <div class="d-flex align-items-center">
+                                    <div class="feature-icon me-3">
+                                        <i class="fas fa-tools"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Skills-Based Hiring</h6>
+                                        <p class="mb-0 text-muted">Focus on abilities over degrees</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Projections -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center">Future Projections (2025-2030)</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3 class="fw-bold mb-4">Market Growth Forecasts</h3>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <div class="metric-card text-center">
+                                <div class="metric-value text-primary">$37.8B</div>
+                                <div class="metric-label">Market Size (2032)</div>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <div class="metric-card text-center">
+                                <div class="metric-value text-success">$3.7B</div>
+                                <div class="metric-label">Software Market (2033)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <div class="metric-card text-center">
+                                <div class="metric-value text-warning">94%</div>
+                                <div class="metric-label">AI Adoption (2030)</div>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <div class="metric-card text-center">
+                                <div class="metric-value text-info">65%</div>
+                                <div class="metric-label">Remote Work (2030)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="chart-container">
+                        <canvas id="futureProjectionsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emerging Trends -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center">Emerging Trends & Opportunities</h2>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-crystal-ball"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Predictive Analytics</h5>
+                        <p class="text-muted">
+                            Advanced workforce planning and candidate success prediction using ML algorithms.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Bias Reduction</h5>
+                        <p class="text-muted">
+                            AI systems to minimize unconscious bias and promote diversity in hiring.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Gig Economy</h5>
+                        <p class="text-muted">
+                            Expansion of freelance and contract work platforms with flexible hiring models.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Skills Assessment</h5>
+                        <p class="text-muted">
+                            Advanced soft skills evaluation and cultural fit analysis tools.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Sources -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center">Data Sources & Methodology</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3 class="fw-bold mb-4">Primary Sources</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3"></i>
+                                <div>
+                                    <strong>Fortune Business Insights</strong><br>
+                                    <small class="text-muted">Online Recruitment Technology Market Report 2024</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3"></i>
+                                <div>
+                                    <strong>IMARC Group</strong><br>
+                                    <small class="text-muted">Recruitment Software Market Analysis 2024</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3"></i>
+                                <div>
+                                    <strong>LinkedIn Talent Insights</strong><br>
+                                    <small class="text-muted">Global Talent Trends 2024</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3"></i>
+                                <div>
+                                    <strong>Gartner Research</strong><br>
+                                    <small class="text-muted">AI in HR Technology Trends</small>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="fw-bold mb-4">Secondary Sources</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3"></i>
+                                <div>
+                                    <strong>Indeed Hiring Lab</strong><br>
+                                    <small class="text-muted">Job Market Research 2024</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3"></i>
+                                <div>
+                                    <strong>Glassdoor Economic Research</strong><br>
+                                    <small class="text-muted">Salary and Benefits Trends</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3"></i>
+                                <div>
+                                    <strong>Bullhorn</strong><br>
+                                    <small class="text-muted">2024 Talent Trends Report</small>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3"></i>
+                                <div>
+                                    <strong>Forrester Research</strong><br>
+                                    <small class="text-muted">Future of Work and Talent Acquisition</small>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+` }) %>
+
