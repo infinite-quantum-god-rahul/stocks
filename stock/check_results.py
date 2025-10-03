@@ -31,3 +31,4 @@ print('• To get the FULL Nifty 500 list, we would need to run the analysis')
 print('  on all 500 stocks, not just the 30 sample stocks')
 print('• The refined criteria are very selective - most stocks will not meet them')
 
+

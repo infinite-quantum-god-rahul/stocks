@@ -307,3 +307,4 @@ class BacktestingFramework:
 if __name__ == "__main__":
     backtester = BacktestingFramework()
     results = backtester.run_backtest()
+

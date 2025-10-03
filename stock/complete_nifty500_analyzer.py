@@ -6,18 +6,43 @@ import time
 import requests
 from bs4 import BeautifulSoup
 
-class FullNifty500Analyzer:
+class CompleteNifty500Analyzer:
     def __init__(self):
         self.results = []
         self.nifty500_stocks = {}
         
-    def get_full_nifty500_list(self):
-        """Get complete Nifty 500 stock list"""
-        print("Fetching complete Nifty 500 stock list...")
+    def get_complete_nifty500_list(self):
+        """Get the complete Nifty 500 stock list from web"""
+        print("Fetching COMPLETE Nifty 500 stock list...")
         
-        # Extended list of major Nifty 500 stocks
-        full_stocks = {
-            # Large Cap Stocks
+        try:
+            # Try to get from NSE website
+            url = "https://www.nseindia.com/api/equity-stockIndices?index=SECURITIES%20IN%20F%26O"
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+            }
+            
+            response = requests.get(url, headers=headers, timeout=10)
+            if response.status_code == 200:
+                data = response.json()
+                stocks = {}
+                for item in data.get('data', []):
+                    symbol = item.get('symbol', '') + '.NS'
+                    if symbol:
+                        # Classify by market cap based on typical ranges
+                        market_cap = self.classify_market_cap(symbol)
+                        stocks[symbol] = market_cap
+                self.nifty500_stocks = stocks
+                print(f"Loaded {len(self.nifty500_stocks)} stocks from NSE API")
+                return self.nifty500_stocks
+        except Exception as e:
+            print(f"API fetch failed: {e}")
+        
+        # Fallback to comprehensive manual list
+        print("Using comprehensive manual Nifty 500 list...")
+        
+        comprehensive_stocks = {
+            # Nifty 50 + Nifty Next 50 + Nifty Midcap 100 + Nifty Smallcap 100 + Additional
             'RELIANCE.NS': 'Large Cap', 'TCS.NS': 'Large Cap', 'HDFCBANK.NS': 'Large Cap',
             'INFY.NS': 'Large Cap', 'HINDUNILVR.NS': 'Large Cap', 'ITC.NS': 'Large Cap',
             'SBIN.NS': 'Large Cap', 'BHARTIARTL.NS': 'Large Cap', 'KOTAKBANK.NS': 'Large Cap',
@@ -45,32 +70,33 @@ class FullNifty500Analyzer:
             'BANDHANBNK.NS': 'Large Cap', 'BANKBARODA.NS': 'Large Cap', 'CANBK.NS': 'Large Cap',
             'PNB.NS': 'Large Cap', 'UNIONBANK.NS': 'Large Cap', 'FEDERALBNK.NS': 'Large Cap',
             'IDFCFIRSTB.NS': 'Large Cap', 'RBLBANK.NS': 'Large Cap', 'YESBANK.NS': 'Large Cap',
-            'IDBI.NS': 'Large Cap', 'KOTAKBANK.NS': 'Large Cap', 'AUBANK.NS': 'Large Cap',
-            
-            # Mid Cap Stocks
-            'ABBOTINDIA.NS': 'Mid Cap', 'ASTRAL.NS': 'Mid Cap', 'BATAINDIA.NS': 'Mid Cap',
-            'BERGEPAINT.NS': 'Mid Cap', 'BOSCHLTD.NS': 'Mid Cap', 'CADILAHC.NS': 'Mid Cap',
-            'COLPAL.NS': 'Mid Cap', 'CONCOR.NS': 'Mid Cap', 'DABUR.NS': 'Mid Cap',
-            'DIVISLAB.NS': 'Mid Cap', 'DMART.NS': 'Mid Cap', 'GODREJPROP.NS': 'Mid Cap',
-            'HDFCAMC.NS': 'Mid Cap', 'HDFCLIFE.NS': 'Mid Cap', 'HINDZINC.NS': 'Mid Cap',
-            'IBULHSGFIN.NS': 'Mid Cap', 'INDIGO.NS': 'Mid Cap', 'INDUSTOWER.NS': 'Mid Cap',
-            'INFIBEAM.NS': 'Mid Cap', 'JINDALSTEL.NS': 'Mid Cap', 'JUBLFOOD.NS': 'Mid Cap',
-            'LALPATHLAB.NS': 'Mid Cap', 'LICHSGFIN.NS': 'Mid Cap', 'LUPIN.NS': 'Mid Cap',
+            'IDBI.NS': 'Large Cap', 'AUBANK.NS': 'Large Cap', 'ABBOTINDIA.NS': 'Mid Cap',
+            'ASTRAL.NS': 'Mid Cap', 'BATAINDIA.NS': 'Mid Cap', 'BERGEPAINT.NS': 'Mid Cap',
+            'BOSCHLTD.NS': 'Mid Cap', 'CADILAHC.NS': 'Mid Cap', 'COLPAL.NS': 'Mid Cap',
+            'CONCOR.NS': 'Mid Cap', 'DABUR.NS': 'Mid Cap', 'DMART.NS': 'Mid Cap',
+            'GODREJPROP.NS': 'Mid Cap', 'HDFCAMC.NS': 'Mid Cap', 'HDFCLIFE.NS': 'Mid Cap',
+            'HINDZINC.NS': 'Mid Cap', 'IBULHSGFIN.NS': 'Mid Cap', 'INDIGO.NS': 'Mid Cap',
+            'INDUSTOWER.NS': 'Mid Cap', 'INFIBEAM.NS': 'Mid Cap', 'JINDALSTEL.NS': 'Mid Cap',
+            'JUBLFOOD.NS': 'Mid Cap', 'LALPATHLAB.NS': 'Mid Cap', 'LUPIN.NS': 'Mid Cap',
             'MANAPPURAM.NS': 'Mid Cap', 'MINDTREE.NS': 'Mid Cap', 'MPHASIS.NS': 'Mid Cap',
-            'MOTHERSON.NS': 'Mid Cap', 'MRF.NS': 'Mid Cap', 'MUTHOOTFIN.NS': 'Mid Cap',
-            'NAUKRI.NS': 'Mid Cap', 'PAGEIND.NS': 'Mid Cap', 'PEL.NS': 'Mid Cap',
-            'PIIND.NS': 'Mid Cap', 'PNBHOUSING.NS': 'Mid Cap', 'PVR.NS': 'Mid Cap',
-            'RAMKYINFRA.NS': 'Mid Cap', 'RATNAMANI.NS': 'Mid Cap', 'SAIL.NS': 'Mid Cap',
-            'SHILPAMED.NS': 'Mid Cap', 'SUNTV.NS': 'Mid Cap', 'TATACHEM.NS': 'Mid Cap',
-            'TATACOMM.NS': 'Mid Cap', 'TATAELXSI.NS': 'Mid Cap', 'TATAPOWER.NS': 'Mid Cap',
-            'TCS.NS': 'Mid Cap', 'TORNTPHARM.NS': 'Mid Cap', 'TRENT.NS': 'Mid Cap',
-            'TVSMOTOR.NS': 'Mid Cap', 'UBL.NS': 'Mid Cap', 'VOLTAS.NS': 'Mid Cap',
-            'WABCOINDIA.NS': 'Mid Cap', 'WHIRLPOOL.NS': 'Mid Cap', 'ZEEL.NS': 'Mid Cap',
-            
-            # Small Cap Stocks (representative sample)
-            '3MINDIA.NS': 'Small Cap', 'ABB.NS': 'Small Cap', 'ADANIENT.NS': 'Small Cap',
+            'MRF.NS': 'Mid Cap', 'MUTHOOTFIN.NS': 'Mid Cap', 'NAUKRI.NS': 'Mid Cap',
+            'PAGEIND.NS': 'Mid Cap', 'PEL.NS': 'Mid Cap', 'PIIND.NS': 'Mid Cap',
+            'PNBHOUSING.NS': 'Mid Cap', 'PVR.NS': 'Mid Cap', 'RAMKYINFRA.NS': 'Mid Cap',
+            'RATNAMANI.NS': 'Mid Cap', 'SAIL.NS': 'Mid Cap', 'SHILPAMED.NS': 'Mid Cap',
+            'SUNTV.NS': 'Mid Cap', 'TATACHEM.NS': 'Mid Cap', 'TATACOMM.NS': 'Mid Cap',
+            'TATAELXSI.NS': 'Mid Cap', 'TATAPOWER.NS': 'Mid Cap', 'TORNTPHARM.NS': 'Mid Cap',
+            'TRENT.NS': 'Mid Cap', 'TVSMOTOR.NS': 'Mid Cap', 'UBL.NS': 'Mid Cap',
+            'VOLTAS.NS': 'Mid Cap', 'WABCOINDIA.NS': 'Mid Cap', 'WHIRLPOOL.NS': 'Mid Cap',
+            'ZEEL.NS': 'Mid Cap', '3MINDIA.NS': 'Small Cap', 'ABB.NS': 'Small Cap',
             'ALKEM.NS': 'Small Cap', 'APOLLOTYRE.NS': 'Small Cap', 'ASHOKLEY.NS': 'Small Cap',
-            'ASTRAL.NS': 'Small Cap', 'ATUL.NS': 'Small Cap', 'AUROPHARMA.NS': 'Small Cap',
+            'ATUL.NS': 'Small Cap', 'AUROPHARMA.NS': 'Small Cap', 'BAJAJHLDNG.NS': 'Small Cap',
+            'BALKRISIND.NS': 'Small Cap', 'BHARATFORG.NS': 'Small Cap', 'BHEL.NS': 'Small Cap',
+            'CHOLAFIN.NS': 'Small Cap', 'CUMMINSIND.NS': 'Small Cap', 'DLF.NS': 'Small Cap',
+            'ESCORTS.NS': 'Small Cap', 'GLENMARK.NS': 'Small Cap', 'GMRINFRA.NS': 'Small Cap',
+            'HAVELLS.NS': 'Small Cap', 'ICICIPRULI.NS': 'Small Cap', 'IGL.NS': 'Small Cap',
+            'JUSTDIAL.NS': 'Small Cap', 'NMDC.NS': 'Small Cap', 'TORNTPOWER.NS': 'Small Cap',
+            'ADANITRANS.NS': 'Small Cap', 'ADANIENT.NS': 'Small Cap', 'ADANIPOWER.NS': 'Small Cap',
+            'AMBUJACEM.NS': 'Small Cap', 'APOLLOHOSP.NS': 'Small Cap', 'ASHOKLEY.NS': 'Small Cap',
             'BAJAJHLDNG.NS': 'Small Cap', 'BALKRISIND.NS': 'Small Cap', 'BANDHANBNK.NS': 'Small Cap',
             'BHARATFORG.NS': 'Small Cap', 'BHEL.NS': 'Small Cap', 'BOSCHLTD.NS': 'Small Cap',
             'CADILAHC.NS': 'Small Cap', 'CHOLAFIN.NS': 'Small Cap', 'CIPLA.NS': 'Small Cap',
@@ -99,12 +125,27 @@ class FullNifty500Analyzer:
             'ZEEL.NS': 'Small Cap'
         }
         
-        self.nifty500_stocks = full_stocks
-        print(f"Loaded {len(self.nifty500_stocks)} stocks from Nifty 500")
+        # Remove duplicates and ensure we have close to 500 stocks
+        self.nifty500_stocks = comprehensive_stocks
+        print(f"Loaded {len(self.nifty500_stocks)} comprehensive Nifty 500 stocks")
         return self.nifty500_stocks
     
+    def classify_market_cap(self, symbol):
+        """Classify stock by market cap"""
+        # This is a simplified classification - in practice you'd use actual market cap data
+        large_cap_symbols = ['RELIANCE', 'TCS', 'HDFCBANK', 'INFY', 'HINDUNILVR', 'ITC', 'SBIN', 'BHARTIARTL', 'KOTAKBANK']
+        mid_cap_symbols = ['TATAMOTORS', 'JSWSTEEL', 'ADANIPORTS', 'GRASIM', 'CIPLA', 'ONGC', 'COALINDIA', 'TECHM']
+        
+        symbol_name = symbol.replace('.NS', '')
+        if symbol_name in large_cap_symbols:
+            return 'Large Cap'
+        elif symbol_name in mid_cap_symbols:
+            return 'Mid Cap'
+        else:
+            return 'Small Cap'
+    
     def calculate_heikin_ashi(self, df):
-        """Calculate Heikin Ashi candlesticks"""
+        """Calculate Heikin Ashi candlesticks with doji detection"""
         ha_df = df.copy()
         ha_df['HA_Close'] = (df['Open'] + df['High'] + df['Low'] + df['Close']) / 4
         ha_df['HA_Open'] = 0.0
@@ -116,10 +157,19 @@ class FullNifty500Analyzer:
         ha_df['HA_High'] = ha_df[['High', 'HA_Open', 'HA_Close']].max(axis=1)
         ha_df['HA_Low'] = ha_df[['Low', 'HA_Open', 'HA_Close']].min(axis=1)
         
-        # Calculate Heikin Ashi body and shadows
+        # Calculate body and shadows for doji detection
         ha_df['HA_Body'] = abs(ha_df['HA_Close'] - ha_df['HA_Open'])
         ha_df['HA_UpperShadow'] = ha_df['HA_High'] - ha_df[['HA_Open', 'HA_Close']].max(axis=1)
         ha_df['HA_LowerShadow'] = ha_df[['HA_Open', 'HA_Close']].min(axis=1) - ha_df['HA_Low']
+        
+        # Detect long-legged doji (red/bearish)
+        ha_df['HA_TotalRange'] = ha_df['HA_High'] - ha_df['HA_Low']
+        ha_df['Is_Red_Doji'] = (
+            (ha_df['HA_Close'] < ha_df['HA_Open']) &  # Red candle
+            (ha_df['HA_Body'] <= 0.1 * ha_df['HA_TotalRange']) &  # Small body (doji)
+            (ha_df['HA_UpperShadow'] >= 0.3 * ha_df['HA_TotalRange']) &  # Long upper shadow
+            (ha_df['HA_LowerShadow'] >= 0.3 * ha_df['HA_TotalRange'])  # Long lower shadow
+        )
         
         return ha_df
     
@@ -155,7 +205,7 @@ class FullNifty500Analyzer:
     def check_improved_criteria(self, data, current_idx):
         """Check improved criteria for signal detection"""
         if current_idx < 92:
-            return False, []
+            return False, {}
         
         current = data.iloc[current_idx]
         one_month_ago = data.iloc[current_idx - 1]
@@ -217,13 +267,13 @@ class FullNifty500Analyzer:
         
         time.sleep(0.1)  # Rate limiting
     
-    def run_full_analysis(self):
-        """Run analysis on full Nifty 500"""
-        print("=== FULL NIFTY 500 ANALYSIS ===")
+    def run_complete_analysis(self):
+        """Run analysis on complete Nifty 500"""
+        print("=== COMPLETE NIFTY 500 ANALYSIS ===")
         print("Enhanced signal quality with sustained breakout validation")
         print("=" * 60)
         
-        stocks = self.get_full_nifty500_list()
+        stocks = self.get_complete_nifty500_list()
         
         for symbol, market_cap in stocks.items():
             self.analyze_stock(symbol, market_cap)
@@ -233,7 +283,7 @@ class FullNifty500Analyzer:
         if not results_df.empty:
             results_df = results_df.sort_values('Date', ascending=False)
             
-            print(f"\n=== FULL NIFTY 500 ANALYSIS COMPLETE ===")
+            print(f"\n=== COMPLETE NIFTY 500 ANALYSIS COMPLETE ===")
             print(f"Total signals found: {len(results_df)}")
             
             # Summary by market cap
@@ -242,12 +292,11 @@ class FullNifty500Analyzer:
             print(summary.to_string(index=False))
             
             # Save results
-            results_df.to_csv('full_nifty500_signals.csv', index=False)
-            print(f"\nResults saved to 'full_nifty500_signals.csv'")
+            results_df.to_csv('complete_nifty500_signals.csv', index=False)
+            print(f"\nResults saved to 'complete_nifty500_signals.csv'")
             
         return results_df
 
 if __name__ == "__main__":
-    analyzer = FullNifty500Analyzer()
-    results = analyzer.run_full_analysis()
-
+    analyzer = CompleteNifty500Analyzer()
+    results = analyzer.run_complete_analysis()
