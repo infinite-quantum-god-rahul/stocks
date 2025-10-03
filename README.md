@@ -52,3 +52,4 @@ The output CSV contains:
 - Heikin Ashi candlesticks are calculated from OHLC data
 - Market cap classification is based on typical NSE classifications
 - Rate limiting is applied to avoid overwhelming the data provider
+

@@ -4,7 +4,7 @@ import numpy as np
 from datetime import datetime, timedelta
 import time
 
-class CorrectedStockAnalyzer:
+class ImprovedStockAnalyzer:
     def __init__(self):
         self.results = []
         
@@ -38,7 +38,7 @@ class CorrectedStockAnalyzer:
             'CIPLA.NS': 'Mid Cap'
         }
         
-        print(f"Using sample of {len(sample_stocks)} major Nifty 500 stocks for CORRECTED analysis")
+        print(f"Using sample of {len(sample_stocks)} major Nifty 500 stocks for IMPROVED analysis")
         return sample_stocks
     
     def calculate_heikin_ashi(self, df):
@@ -84,7 +84,7 @@ class CorrectedStockAnalyzer:
             # Calculate Heikin Ashi
             data = self.calculate_heikin_ashi(data)
             
-            # CORRECTED: Calculate 89 EMA on Heikin Ashi Close (not regular Close)
+            # Calculate 89 EMA on Heikin Ashi Close
             data['EMA_89_HA_Close'] = self.calculate_ema(data['HA_Close'], 89)
             
             print(f"  Successfully processed {len(data)} monthly candles for {symbol}")
@@ -94,20 +94,17 @@ class CorrectedStockAnalyzer:
             print(f"  Error fetching data for {symbol}: {e}")
             return None
     
-    def check_corrected_criteria(self, data, current_idx):
-        """Check all CORRECTED criteria for a specific month"""
-        if current_idx < 90:  # Need at least 89 months of data + 1 month ago
+    def check_improved_criteria(self, data, current_idx):
+        """Check IMPROVED criteria with sustained breakout requirement"""
+        if current_idx < 92:  # Need at least 89 months + 2 months for sustained breakout
             return False, "Insufficient data"
         
-        # Get current month data
+        # Get current month and previous months data
         current = data.iloc[current_idx]
-        
-        # Get 1 month ago data
         one_month_ago = data.iloc[current_idx - 1]
+        two_months_ago = data.iloc[current_idx - 2]
         
         # Get 89 months ago data (for condition 4)
-        if current_idx < 89:
-            return False, "Insufficient data for 89 months ago check"
         eighty_nine_months_ago = data.iloc[current_idx - 89]
         
         criteria_results = []
@@ -116,11 +113,11 @@ class CorrectedStockAnalyzer:
         cond1 = current['HA_Close'] > current['HA_Open']
         criteria_results.append(f"HA_Close({current['HA_Close']:.2f}) > HA_Open({current['HA_Open']:.2f}): {cond1}")
         
-        # CORRECTED Condition 2: Monthly HA-Close > Monthly EMA(Monthly HA_Close, 89)
+        # Condition 2: Monthly HA-Close > Monthly EMA(Monthly HA_Close, 89)
         cond2 = current['HA_Close'] > current['EMA_89_HA_Close']
         criteria_results.append(f"HA_Close({current['HA_Close']:.2f}) > EMA89_HA({current['EMA_89_HA_Close']:.2f}): {cond2}")
         
-        # CORRECTED Condition 3: Monthly HA-Open <= Monthly EMA(Monthly HA_Close, 89)
+        # Condition 3: Monthly HA-Open <= Monthly EMA(Monthly HA_Close, 89)
         cond3 = current['HA_Open'] <= current['EMA_89_HA_Close']
         criteria_results.append(f"HA_Open({current['HA_Open']:.2f}) <= EMA89_HA({current['EMA_89_HA_Close']:.2f}): {cond3}")
         
@@ -128,29 +125,39 @@ class CorrectedStockAnalyzer:
         cond4 = eighty_nine_months_ago['Close'] > 0
         criteria_results.append(f"89mo ago Close({eighty_nine_months_ago['Close']:.2f}) > 0: {cond4}")
         
-        # CORRECTED Condition 5: 1 month ago HA-Close < Monthly EMA(Monthly HA_Close, 89)
+        # Condition 5: 1 month ago HA-Close < Monthly EMA(Monthly HA_Close, 89)
         cond5 = one_month_ago['HA_Close'] < one_month_ago['EMA_89_HA_Close']
         criteria_results.append(f"1mo ago HA_Close({one_month_ago['HA_Close']:.2f}) < EMA89_HA({one_month_ago['EMA_89_HA_Close']:.2f}): {cond5}")
         
+        # NEW Condition 6: SUSTAINED BREAKOUT - Current month is the FIRST month above EMA
+        # This means 2 months ago was below EMA, ensuring this is a genuine first crossover
+        cond6 = two_months_ago['HA_Close'] <= two_months_ago['EMA_89_HA_Close']
+        criteria_results.append(f"2mo ago HA_Close({two_months_ago['HA_Close']:.2f}) <= EMA89_HA({two_months_ago['EMA_89_HA_Close']:.2f}): {cond6}")
+        
+        # NEW Condition 7: BREAKOUT STRENGTH - HA_Close should be at least 1% above EMA
+        breakout_strength = ((current['HA_Close'] - current['EMA_89_HA_Close']) / current['EMA_89_HA_Close']) * 100
+        cond7 = breakout_strength >= 1.0  # At least 1% above EMA
+        criteria_results.append(f"Breakout strength({breakout_strength:.2f}%) >= 1%: {cond7}")
+        
         # All conditions must be true
-        all_conditions_met = cond1 and cond2 and cond3 and cond4 and cond5
+        all_conditions_met = cond1 and cond2 and cond3 and cond4 and cond5 and cond6 and cond7
         
         return all_conditions_met, criteria_results
     
     def analyze_stock(self, symbol, market_cap):
-        """Analyze a single stock for CORRECTED signals"""
-        print(f"Analyzing {symbol} ({market_cap}) with CORRECTED criteria...")
+        """Analyze a single stock for IMPROVED signals"""
+        print(f"Analyzing {symbol} ({market_cap}) with IMPROVED criteria...")
         
         data = self.fetch_stock_data(symbol)
-        if data is None or len(data) < 91:  # Need at least 89 periods + 1 month ago + current
+        if data is None or len(data) < 93:  # Need at least 89 periods + 2 months for sustained breakout + current
             print(f"  Skipping {symbol} - insufficient data")
             return
         
         signals_found = 0
         
-        # Check each month from index 90 onwards (need 89 months of history + 1 month ago)
-        for i in range(90, len(data)):
-            conditions_met, details = self.check_corrected_criteria(data, i)
+        # Check each month from index 92 onwards (need 89 months of history + 2 months for sustained breakout)
+        for i in range(92, len(data)):
+            conditions_met, details = self.check_improved_criteria(data, i)
             
             if conditions_met:
                 signals_found += 1
@@ -167,26 +174,29 @@ class CorrectedStockAnalyzer:
                     'HA_Close': round(current['HA_Close'], 2),
                     'HA_Open': round(current['HA_Open'], 2),
                     'EMA_89_HA_Close': round(current['EMA_89_HA_Close'], 2),
+                    'Breakout_Strength_Percent': round(((current['HA_Close'] - current['EMA_89_HA_Close']) / current['EMA_89_HA_Close']) * 100, 2),
                     'Regular_Close': round(current['Close'], 2)
                 })
         
         if signals_found == 0:
-            print(f"  No corrected signals found for {symbol}")
+            print(f"  No improved signals found for {symbol}")
         else:
-            print(f"  Found {signals_found} corrected signals for {symbol}")
+            print(f"  Found {signals_found} improved signals for {symbol}")
         
         time.sleep(1)  # Rate limiting
     
     def run_analysis(self):
-        """Run the CORRECTED analysis"""
-        print("CORRECTED Nifty 500 Analysis with Proper Heikin Ashi Implementation")
+        """Run the IMPROVED analysis"""
+        print("IMPROVED Nifty 500 Analysis with Sustained Breakout Requirements")
         print("=" * 80)
-        print("CORRECTED Conditions (using HA_Close for EMA calculation):")
+        print("IMPROVED Conditions (with sustained breakout validation):")
         print("1. Monthly HA-Close > Monthly HA-Open")
         print("2. Monthly HA-Close > Monthly EMA(Monthly HA_Close, 89)")
         print("3. Monthly HA-Open <= Monthly EMA(Monthly HA_Close, 89)")
         print("4. 89 months ago Close > 0")
         print("5. 1 month ago HA-Close < Monthly EMA(Monthly HA_Close, 89)")
+        print("6. 2 months ago HA-Close <= Monthly EMA (FIRST CROSSOVER VALIDATION)")
+        print("7. Breakout strength >= 1% above EMA (QUALITY FILTER)")
         print("=" * 80)
         
         # Get sample stock list
@@ -202,35 +212,35 @@ class CorrectedStockAnalyzer:
         if not results_df.empty:
             results_df = results_df.sort_values('Date', ascending=False)
             
-            print(f"\nCORRECTED ANALYSIS COMPLETE!")
-            print(f"Found {len(results_df)} CORRECTED signals")
+            print(f"\nIMPROVED ANALYSIS COMPLETE!")
+            print(f"Found {len(results_df)} IMPROVED signals (vs 21 previous signals)")
             print("=" * 70)
-            print("Recent Corrected Signals:")
+            print("Recent Improved Signals:")
             print("=" * 70)
-            print(results_df[['Date', 'Stock_Ticker', 'Market_Cap']].head(20).to_string(index=False))
+            print(results_df[['Date', 'Stock_Ticker', 'Market_Cap', 'Breakout_Strength_Percent']].head(20).to_string(index=False))
             
             # Save to CSV
-            results_df.to_csv('corrected_nifty500_signals.csv', index=False)
-            print(f"\nCorrected results saved to 'corrected_nifty500_signals.csv'")
+            results_df.to_csv('improved_nifty500_signals.csv', index=False)
+            print(f"\nImproved results saved to 'improved_nifty500_signals.csv'")
             
             # Summary by market cap
             print("\nSummary by Market Cap:")
             print("=" * 30)
-            summary = results_df.groupby('Market_Cap').size().reset_index(name='Corrected_Signal_Count')
+            summary = results_df.groupby('Market_Cap').size().reset_index(name='Improved_Signal_Count')
             print(summary.to_string(index=False))
             
             # Show sample of detailed results
             print("\nSample Detailed Results:")
             print("=" * 80)
-            sample_detailed = results_df.head(10)[['Date', 'Stock_Ticker', 'Market_Cap', 'HA_Close', 'HA_Open', 'EMA_89_HA_Close']]
+            sample_detailed = results_df.head(10)[['Date', 'Stock_Ticker', 'Market_Cap', 'HA_Close', 'EMA_89_HA_Close', 'Breakout_Strength_Percent']]
             print(sample_detailed.to_string(index=False))
             
         else:
-            print("No corrected signals found matching all criteria.")
+            print("No improved signals found matching all criteria.")
         
         return results_df
 
 if __name__ == "__main__":
-    analyzer = CorrectedStockAnalyzer()
+    analyzer = ImprovedStockAnalyzer()
     results = analyzer.run_analysis()
 
