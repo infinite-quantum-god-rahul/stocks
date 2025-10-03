@@ -73,3 +73,4 @@ Date        | Stock_Ticker | Market_Cap | HA_Close | EMA_89
 - Portfolio optimization features
 - Additional technical indicators
 - Web dashboard interface
+
