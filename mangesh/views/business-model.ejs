@@ -1,0 +1,232 @@
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="text-center mb-5">
+                <h1 class="display-4 fw-bold text-primary mb-3"><%= title %></h1>
+                <p class="lead text-muted">Comprehensive monetization strategy and financial projections</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Business Model Overview -->
+    <div class="row mb-5">
+        <div class="col-lg-12">
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-5">
+                    <h2 class="h3 fw-bold text-primary mb-4">📊 Business Model: <%= model %></h2>
+                    <p class="lead">A proven freemium B2B SaaS model with multiple revenue streams and scalable growth potential.</p>
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-4">
+                            <div class="text-center p-3">
+                                <div class="fs-1 text-success">💰</div>
+                                <h5 class="fw-bold">Revenue Streams</h5>
+                                <p class="text-muted">Subscription fees, premium features, enterprise contracts</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center p-3">
+                                <div class="fs-1 text-info">📈</div>
+                                <h5 class="fw-bold">Scalable Growth</h5>
+                                <p class="text-muted">Low marginal costs, high customer lifetime value</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center p-3">
+                                <div class="fs-1 text-warning">🎯</div>
+                                <h5 class="fw-bold">Market Fit</h5>
+                                <p class="text-muted">Proven demand, clear value proposition</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pricing Tiers -->
+    <div class="row mb-5">
+        <div class="col-lg-12">
+            <h2 class="h3 fw-bold text-center mb-5">💎 Pricing Tiers</h2>
+            <div class="row">
+                <% tiers.forEach(function(tier) { %>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm border-0 pricing-card">
+                        <div class="card-body text-center p-4">
+                            <h5 class="fw-bold text-primary mb-3"><%= tier.name %></h5>
+                            <div class="pricing-amount mb-4">
+                                <span class="display-6 fw-bold text-dark"><%= tier.price %></span>
+                            </div>
+                            <ul class="list-unstyled">
+                                <% tier.features.forEach(function(feature) { %>
+                                <li class="mb-2">
+                                    <i class="fas fa-check text-success me-2"></i>
+                                    <%= feature %>
+                                </li>
+                                <% }); %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Projections -->
+    <div class="row mb-5">
+        <div class="col-lg-12">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 fw-bold mb-0">📊 3-Year Financial Projections</h2>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="fw-bold">Year</th>
+                                    <th class="fw-bold text-end">Revenue</th>
+                                    <th class="fw-bold text-end">Profit</th>
+                                    <th class="fw-bold text-end">Users</th>
+                                    <th class="fw-bold text-end">Margin</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% projections.forEach(function(projection) { %>
+                                <tr>
+                                    <td class="fw-bold">Year <%= projection.year %></td>
+                                    <td class="text-end text-success fw-bold"><%= projection.revenue %></td>
+                                    <td class="text-end text-success fw-bold"><%= projection.profit %></td>
+                                    <td class="text-end"><%= projection.users %></td>
+                                    <td class="text-end text-info fw-bold"><%= projection.margin %></td>
+                                </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key Metrics -->
+    <div class="row mb-5">
+        <div class="col-lg-12">
+            <h2 class="h3 fw-bold text-center mb-5">🎯 Key Success Metrics</h2>
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <div class="card text-center border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="fs-1 text-primary mb-3">72%</div>
+                            <h6 class="fw-bold">Year 1 Margin</h6>
+                            <p class="text-muted small">Industry-leading profitability</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card text-center border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="fs-1 text-success mb-3">87%</div>
+                            <h6 class="fw-bold">Year 3 Margin</h6>
+                            <p class="text-muted small">Exceptional scalability</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card text-center border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="fs-1 text-info mb-3">$27M</div>
+                            <h6 class="fw-bold">Year 3 Revenue</h6>
+                            <p class="text-muted small">Strong growth trajectory</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card text-center border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="fs-1 text-warning mb-3">9K</div>
+                            <h6 class="fw-bold">Year 3 Users</h6>
+                            <p class="text-muted small">Substantial user base</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Revenue Breakdown -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-success text-white">
+                    <h2 class="h4 fw-bold mb-0">💵 Revenue Breakdown</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Subscription Revenue</h6>
+                                    <p class="text-muted mb-0">85% of total revenue</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Premium Features</h6>
+                                    <p class="text-muted mb-0">10% of total revenue</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-warning text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <i class="fas fa-building"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Enterprise Contracts</h6>
+                                    <p class="text-muted mb-0">5% of total revenue</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.pricing-card {
+    transition: transform 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.pricing-card:hover {
+    transform: translateY(-5px);
+    border-color: #0d6efd;
+}
+
+.pricing-amount {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.table th {
+    border-top: none;
+    font-weight: 600;
+}
+
+.card-header {
+    border-bottom: none;
+}
+</style>

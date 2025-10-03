@@ -1,0 +1,100 @@
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="text-center mb-5">
+                <h1 class="display-4 fw-bold text-primary mb-3"><%= title %></h1>
+                <p class="lead text-muted">Market positioning and competitive advantages</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Competitor Analysis -->
+    <div class="row mb-5">
+        <div class="col-lg-12">
+            <h2 class="h3 fw-bold text-center mb-5">🏢 Market Competitors</h2>
+            <div class="row">
+                <% competitors.forEach(function(competitor) { %>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body text-center p-4">
+                            <h5 class="fw-bold text-primary mb-3"><%= competitor.name %></h5>
+                            <div class="mb-3">
+                                <span class="badge bg-info fs-6"><%= competitor.share %> Market Share</span>
+                            </div>
+                            <div class="mb-3">
+                                <span class="text-success fw-bold fs-5"><%= competitor.revenue %></span>
+                                <small class="text-muted d-block">Annual Revenue</small>
+                            </div>
+                            <p class="text-muted small"><%= competitor.strength %></p>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Our Advantages -->
+    <div class="row mb-5">
+        <div class="col-lg-12">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-success text-white">
+                    <h2 class="h4 fw-bold mb-0">🚀 Our Competitive Advantages</h2>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row">
+                        <% advantages.forEach(function(advantage, index) { %>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-start">
+                                <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Advantage <%= index + 1 %></h6>
+                                    <p class="text-muted mb-0"><%= advantage %></p>
+                                </div>
+                            </div>
+                        </div>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Market Position -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 fw-bold mb-0">🎯 Market Position</h2>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="text-center">
+                                <div class="fs-1 text-primary mb-3">🥇</div>
+                                <h5 class="fw-bold">Premium Positioning</h5>
+                                <p class="text-muted">Focus on quality over quantity, targeting high-value customers</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="text-center">
+                                <div class="fs-1 text-success mb-3">🎯</div>
+                                <h5 class="fw-bold">Niche Focus</h5>
+                                <p class="text-muted">Specialized AI matching for specific industries and roles</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="text-center">
+                                <div class="fs-1 text-info mb-3">⚡</div>
+                                <h5 class="fw-bold">Innovation First</h5>
+                                <p class="text-muted">Cutting-edge technology and user experience</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

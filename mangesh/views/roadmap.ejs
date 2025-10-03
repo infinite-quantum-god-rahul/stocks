@@ -1,0 +1,165 @@
+<%- include('layout', { body: `
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 fw-bold mb-4">Implementation Roadmap</h1>
+                    <p class="lead mb-4">
+                        Phased development approach with clear milestones, feature sets, and timelines for building a market-leading job matching platform.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Overview -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="roadmap-phase">
+                        <div class="phase-number">1</div>
+                        <h3 class="fw-bold mb-3">MVP Phase</h3>
+                        <p class="text-muted mb-3"><strong>Duration:</strong> Months 1-6</p>
+                        <p class="text-muted mb-3"><strong>Investment:</strong> $500K</p>
+                        <h5 class="fw-bold mb-3">Core Features:</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Basic job posting system</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Candidate profile management</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Keyword-based matching</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Application tracking</li>
+                        </ul>
+                        <div class="mt-3">
+                            <span class="badge bg-primary">Target: 1,000 job seekers, 100 companies</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="roadmap-phase">
+                        <div class="phase-number">2</div>
+                        <h3 class="fw-bold mb-3">V1 Phase</h3>
+                        <p class="text-muted mb-3"><strong>Duration:</strong> Months 7-12</p>
+                        <p class="text-muted mb-3"><strong>Investment:</strong> $1.0M</p>
+                        <h5 class="fw-bold mb-3">Enhanced Features:</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>AI-powered matching</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Analytics dashboard</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Mobile applications</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Advanced features</li>
+                        </ul>
+                        <div class="mt-3">
+                            <span class="badge bg-primary">Target: 5,000 job seekers, 500 companies</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="roadmap-phase">
+                        <div class="phase-number">3</div>
+                        <h3 class="fw-bold mb-3">V2 Phase</h3>
+                        <p class="text-muted mb-3"><strong>Duration:</strong> Months 13-18</p>
+                        <p class="text-muted mb-3"><strong>Investment:</strong> $1.5M</p>
+                        <h5 class="fw-bold mb-3">Advanced Features:</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Predictive analytics</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Bias reduction tools</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Enterprise integrations</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>White-label options</li>
+                        </ul>
+                        <div class="mt-3">
+                            <span class="badge bg-primary">Target: 15,000 job seekers, 1,500 companies</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Visualization -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center">Development Timeline</h2>
+            <div class="row">
+                <div class="col-12">
+                    <div class="chart-container">
+                        <canvas id="timelineChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Metrics -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center">Success Metrics & KPIs</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3 class="fw-bold mb-4">Product Metrics</h3>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <div class="metric-card text-center">
+                                <div class="metric-value text-primary">60% → 85%</div>
+                                <div class="metric-label">Match Accuracy</div>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <div class="metric-card text-center">
+                                <div class="metric-value text-success">42 → 21 days</div>
+                                <div class="metric-label">Time-to-Hire</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <div class="metric-card text-center">
+                                <div class="metric-value text-warning">4.5/5</div>
+                                <div class="metric-label">User Satisfaction</div>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <div class="metric-card text-center">
+                                <div class="metric-value text-info">99.9%</div>
+                                <div class="metric-label">Platform Uptime</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="fw-bold mb-4">Business Metrics</h3>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <div class="metric-card text-center">
+                                <div class="metric-value text-primary">$3.75M</div>
+                                <div class="metric-label">MRR (Year 3)</div>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <div class="metric-card text-center">
+                                <div class="metric-value text-success">&lt;$300</div>
+                                <div class="metric-label">CAC</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <div class="metric-card text-center">
+                                <div class="metric-value text-warning">&gt;$2,400</div>
+                                <div class="metric-label">CLV</div>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <div class="metric-card text-center">
+                                <div class="metric-value text-info">&lt;5%</div>
+                                <div class="metric-label">Monthly Churn</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+` }) %>
+
+
+
