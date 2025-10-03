@@ -171,3 +171,4 @@ class DemoStockAnalyzer:
 if __name__ == "__main__":
     analyzer = DemoStockAnalyzer()
     results = analyzer.run_analysis()
+

@@ -243,3 +243,4 @@ class ImprovedStockAnalyzer:
 if __name__ == "__main__":
     analyzer = ImprovedStockAnalyzer()
     results = analyzer.run_analysis()
+

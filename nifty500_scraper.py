@@ -94,3 +94,4 @@ if __name__ == "__main__":
     for stock in stocks[:10]:
         cap = classify_market_cap(stock)
         print(f"{stock}: {cap}")
+
